@@ -42,6 +42,7 @@ when 'rhel'
     bash 'Update locale' do
         user 'root'
         code "/usr/bin/localectl --no-ask-password set-locale LANG=#{node[:locale][:lang]}"
+        not_if { Locale.up_to_date?('/etc/locale.conf', lang, nil) }
     end
   else
     locale_file_path = "/etc/sysconfig/i18n"
